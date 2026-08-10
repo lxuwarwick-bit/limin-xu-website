@@ -434,6 +434,25 @@
     }
     .work:hover .work-image-wrap::after { opacity: 1; }
 
+    .work-image-pair {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-elev);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .work-image-pair img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      transition: transform 1.4s var(--ease), filter 0.6s var(--ease);
+      filter: brightness(0.95);
+    }
+    .work-image-pair img:only-child { aspect-ratio: 4/5; }
+    .work:hover .work-image-pair img { transform: scale(1.03); filter: brightness(1); }
+
     .work-meta {
       padding-top: 1.5rem;
       display: flex;
@@ -559,6 +578,7 @@
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--line);
     }
+    .cv-block:last-child { grid-column: 1 / -1; }
     [data-lang="zh"] .cv-block h3 { font-family: var(--serif-zh); }
 
     .cv-item {
@@ -902,6 +922,36 @@
 
     <div class="works-grid">
 
+      <!-- Work 0 — Phosphenes (2026) -->
+      <article class="work reveal" data-work="phosphenes">
+        <div class="work-image-pair">
+          <img src="images/phosphenes_1.jpg" alt="Phosphenes — multi-media drawing, detail view" />
+          <img src="images/phosphenes_2.jpg" alt="Phosphenes — multi-media drawing, detail view" />
+        </div>
+        <div class="work-meta">
+          <div>
+            <h3 class="work-title">
+              <span class="lang-en">Phosphenes</span>
+              <span class="lang-zh">光幻视</span>
+            </h3>
+            <p class="work-medium"><span class="lang-en">Multi-media Drawing · 2026</span><span class="lang-zh">多媒体绘画 · 2026</span></p>
+          </div>
+          <span class="work-year">2026</span>
+        </div>
+        <button class="work-expand" aria-label="Expand description">
+          <span class="lang-en">Read more</span>
+          <span class="lang-zh">展开</span>
+        </button>
+        <div class="work-desc">
+          <div class="work-desc-inner">
+            <p>
+              <span class="lang-en">Phosphenes are the lights we see without light — flickers and lattices born from pressure on the eye or the spontaneous firing of the visual cortex. Drawing on the artist's research into perception and neuroplasticity, this multi-media drawing translates the private electric weather of the brain into marks on paper. Between vision and imagination, between signal and noise, the work asks where seeing ends and the mind begins.</span>
+              <span class="lang-zh">光幻视，是"无光却见光"的现象——闭眼按压、或视觉皮层自发放电时，眼前浮现的光点与网格。这件多媒体绘画源自艺术家对感知与神经可塑性的研究，将大脑私密的"电之气象"转译为纸上的笔迹。在视觉与想象、信号与噪声之间，作品叩问：看见止于何处，而心识又始于何方。</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
       <!-- Work 1 — Ink Art Meets Science (2024) -->
       <article class="work reveal" data-work="ink-art">
         <div class="work-image-wrap">
@@ -1063,6 +1113,21 @@
 
     <ul class="exhibitions-list">
       <li class="exhibition reveal">
+        <span class="exhibition-year">2026</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">Drawing Closer — Phosphenes</span>
+            <span class="lang-zh">Drawing Closer —— 光幻视</span>
+          </h3>
+          <p>
+            <span class="lang-en">Multi-media Drawing — Royal Drawing School Online Drawing Development Year Exhibition, London, UK.</span>
+            <span class="lang-zh">多媒体绘画 —— 英国皇家绘画学校"在线绘画发展年"展览，伦敦。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Group Show</span><span class="lang-zh">群展</span></span>
+      </li>
+
+      <li class="exhibition reveal">
         <span class="exhibition-year">2024</span>
         <div class="exhibition-content">
           <h3>
@@ -1187,25 +1252,21 @@
         <h3><span class="lang-en">Education</span><span class="lang-zh">教育</span></h3>
 
         <div class="cv-item">
-          <span class="cv-item-year">2022</span>
           <h4 class="cv-item-title"><span class="lang-en">MA in Fine Arts</span><span class="lang-zh">艺术硕士</span></h4>
           <p class="cv-item-place"><span class="lang-en">The Chinese University of Hong Kong</span><span class="lang-zh">香港中文大学</span></p>
         </div>
 
         <div class="cv-item">
-          <span class="cv-item-year">2012</span>
           <h4 class="cv-item-title"><span class="lang-en">PhD in Plant &amp; Environmental Sciences</span><span class="lang-zh">植物与环境科学博士</span></h4>
           <p class="cv-item-place"><span class="lang-en">University of Warwick, School of Life Sciences, UK</span><span class="lang-zh">华威大学，英国</span></p>
         </div>
 
         <div class="cv-item">
-          <span class="cv-item-year">2005</span>
           <h4 class="cv-item-title"><span class="lang-en">MSc in Applied Biomolecular Technology</span><span class="lang-zh">应用生物分子技术硕士</span></h4>
           <p class="cv-item-place"><span class="lang-en">University of Nottingham, UK</span><span class="lang-zh">诺丁汉大学，英国</span></p>
         </div>
 
         <div class="cv-item">
-          <span class="cv-item-year">2003</span>
           <h4 class="cv-item-title"><span class="lang-en">BSc in Biotechnology</span><span class="lang-zh">生物技术学士</span></h4>
           <p class="cv-item-place"><span class="lang-en">South China Agricultural University, Guangzhou</span><span class="lang-zh">华南农业大学，广州</span></p>
         </div>
@@ -1227,19 +1288,6 @@
           <h4 class="cv-item-title"><span class="lang-en">Research Fellow / Manager</span><span class="lang-zh">研究员 / 经理</span></h4>
           <p class="cv-item-place"><span class="lang-en">School of Medicine, CUHK Shenzhen</span><span class="lang-zh">香港中文大学（深圳）医学院</span></p>
           <p class="cv-item-desc"><span class="lang-en">Established the Biomedical Big Data Cloud Platform (Tencent) and joint laboratory with Haplox.</span><span class="lang-zh">建立生物医学大数据云平台（腾讯）及与Haplox的联合实验室。</span></p>
-        </div>
-
-        <div class="cv-item">
-          <span class="cv-item-year"><span class="lang-en">2014 — 2019</span><span class="lang-zh">2014 — 2019</span></span>
-          <h4 class="cv-item-title"><span class="lang-en">Senior Research Manager (PI)</span><span class="lang-zh">高级研究经理</span></h4>
-          <p class="cv-item-place"><span class="lang-en">AsiaPac Bio-Technology Co. Ltd., Dongguan</span><span class="lang-zh">亚太生物科技有限公司，东莞</span></p>
-          <p class="cv-item-desc"><span class="lang-en">Led biomass degradation, biosynthesis, and novel enzyme development projects.</span><span class="lang-zh">主导生物质降解、生物合成及新型酶开发项目。</span></p>
-        </div>
-
-        <div class="cv-item">
-          <span class="cv-item-year"><span class="lang-en">2013 — 2014</span><span class="lang-zh">2013 — 2014</span></span>
-          <h4 class="cv-item-title"><span class="lang-en">Research Associate</span><span class="lang-zh">研究员</span></h4>
-          <p class="cv-item-place"><span class="lang-en">University of Warwick, UK</span><span class="lang-zh">华威大学，英国</span></p>
         </div>
       </div>
 
@@ -1263,9 +1311,9 @@
         </ul>
       </div>
 
-      <!-- Certifications & Teaching -->
+      <!-- Teaching -->
       <div class="cv-block reveal reveal-delay-3">
-        <h3><span class="lang-en">Teaching &amp; Certifications</span><span class="lang-zh">教学与资质</span></h3>
+        <h3><span class="lang-en">Teaching</span><span class="lang-zh">教学</span></h3>
 
         <div class="cv-item">
           <span class="cv-item-year"><span class="lang-en">2025 — 2026</span><span class="lang-zh">2025 — 2026</span></span>
@@ -1277,6 +1325,16 @@
           <span class="cv-item-year"><span class="lang-en">2022 — 2023</span><span class="lang-zh">2022 — 2023</span></span>
           <h4 class="cv-item-title"><span class="lang-en">Microbiology</span><span class="lang-zh">微生物学</span></h4>
           <p class="cv-item-place"><span class="lang-en">School of Medicine, CUHK Shenzhen</span><span class="lang-zh">港中大（深圳）医学院</span></p>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="cv-block reveal reveal-delay-3">
+        <h3><span class="lang-en">Certifications</span><span class="lang-zh">资质证书</span></h3>
+
+        <div class="cv-item">
+          <h4 class="cv-item-title"><span class="lang-en">Online Drawing Development Year</span><span class="lang-zh">在线绘画发展年课程</span></h4>
+          <p class="cv-item-place"><span class="lang-en">Royal Drawing School, London, UK</span><span class="lang-zh">英国皇家绘画学校，伦敦</span></p>
         </div>
 
         <div class="cv-item">
