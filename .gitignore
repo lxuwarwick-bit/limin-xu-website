@@ -1,0 +1,6 @@
+# Preview screenshots (not part of the live site)
+preview-*.png
+
+# OS / editor
+.DS_Store
+Thumbs.db

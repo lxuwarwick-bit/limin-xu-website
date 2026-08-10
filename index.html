@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Limin Xu 徐莉敏 — Contemporary artist exploring the intersections of life, art, and science through multi-media installation, ink painting, and generative art." />
+  <title>Limin Xu 徐莉敏 — Contemporary Artist</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================
+       CSS RESET & BASE
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0a0908;
+      --bg-elev:     #131210;
+      --bg-soft:     #1a1917;
+      --text:         #f0ebe0;
+      --text-muted:  #8a857c;
+      --accent:       #c8a96e;
+      --accent-soft: #d9bf85;
+      --line:         #2a2725;
+      --serif-en:    'Cormorant Garamond', 'Times New Roman', serif;
+      --serif-zh:    'Noto Serif SC', 'Songti SC', serif;
+      --sans:         'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      --ease:         cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ============================================
+       LANGUAGE TOGGLE HELPER
+       ============================================ */
+    [data-lang="zh"] body { font-family: var(--sans); }
+    [data-lang="zh"] .serif,
+    [data-lang="zh"] h1, [data-lang="zh"] h2, [data-lang="zh"] h3 {
+      font-family: var(--serif-zh) !important;
+    }
+    .lang-en, .lang-zh { display: none; }
+    [data-lang="en"] .lang-en { display: inline; }
+    [data-lang="zh"] .lang-zh { display: inline; }
+    [data-lang="en"] .zh-only { display: none; }
+    [data-lang="zh"] .en-only { display: none; }
+    [data-lang="en"] [data-en] { font-family: var(--serif-en); }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s var(--ease), padding 0.4s var(--ease);
+      mix-blend-mode: difference;
+    }
+    .nav.scrolled {
+      mix-blend-mode: normal;
+      background: rgba(10, 9, 8, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1rem 2.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: var(--serif-en);
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      position: relative;
+      transition: color 0.3s var(--ease);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s var(--ease);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .lang-toggle {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--text-muted);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      background: transparent;
+      color: var(--text);
+      font-family: var(--sans);
+    }
+    .lang-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .lang-toggle .active {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .lang-toggle .sep { color: var(--text-muted); }
+
+    .menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      color: var(--text);
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(200, 169, 110, 0.08), transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(100, 80, 50, 0.06), transparent 50%);
+      z-index: 0;
+    }
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.5) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 4px 4px;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 1100px;
+      padding: 0 1rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1.2s var(--ease) 0.2s forwards;
+    }
+    .hero-title {
+      font-family: var(--serif-en);
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1.2s var(--ease) 0.5s forwards;
+    }
+    .hero-title .zh-only {
+      font-family: var(--serif-zh);
+      font-weight: 400;
+    }
+    .hero-tagline {
+      font-family: var(--serif-en);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 1.2s var(--ease) 0.8s forwards;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeUp 1.2s var(--ease) 1.1s forwards;
+    }
+    .hero-meta span { position: relative; }
+    .hero-meta span:not(:last-child)::after {
+      content: '·';
+      position: absolute;
+      right: -1.5rem;
+      color: var(--accent);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      animation: fadeUp 1.2s var(--ease) 1.5s forwards;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--accent));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.3); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       SECTIONS (general)
+       ============================================ */
+    section {
+      padding: 8rem 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--serif-en);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 3rem;
+      max-width: 900px;
+    }
+    [data-lang="zh"] .section-title {
+      font-family: var(--serif-zh);
+      letter-spacing: 0;
+    }
+
+    /* ============================================
+       ABOUT
+       ============================================ */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .about-text p:first-of-type::first-letter {
+      font-family: var(--serif-en);
+      font-size: 3.5rem;
+      float: left;
+      line-height: 1;
+      padding-right: 0.5rem;
+      color: var(--accent);
+    }
+    [data-lang="zh"] .about-text p:first-of-type::first-letter {
+      font-family: var(--serif-zh);
+    }
+    .about-image {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--bg-elev);
+    }
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--ease);
+    }
+    .about-image:hover img { transform: scale(1.05); }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--line);
+      pointer-events: none;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--line);
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-num {
+      font-family: var(--serif-en);
+      font-size: 2.5rem;
+      color: var(--accent);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* ============================================
+       WORKS GALLERY
+       ============================================ */
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem 2.5rem;
+      margin-top: 4rem;
+    }
+    .work {
+      position: relative;
+      cursor: pointer;
+    }
+    .work:nth-child(odd) {
+      margin-top: 0;
+    }
+    .work:nth-child(even) {
+      margin-top: 4rem;
+    }
+    .work-image-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-elev);
+      aspect-ratio: 4/5;
+    }
+    .work-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.4s var(--ease), filter 0.6s var(--ease);
+      filter: brightness(0.95);
+    }
+    .work:hover .work-image-wrap img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+    .work-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.4));
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+    .work:hover .work-image-wrap::after { opacity: 1; }
+
+    .work-meta {
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .work-title {
+      font-family: var(--serif-en);
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color 0.3s var(--ease);
+    }
+    .work:hover .work-title { color: var(--accent); }
+    [data-lang="zh"] .work-title { font-family: var(--serif-zh); }
+
+    .work-year {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    .work-medium {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-top: 0.5rem;
+    }
+    .work-desc {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s var(--ease), margin-top 0.6s var(--ease);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+    .work-desc-inner { padding-top: 1rem; border-top: 1px solid var(--line); margin-top: 1rem; }
+    .work.expanded .work-desc { max-height: 800px; }
+
+    .work-expand {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--sans);
+    }
+    .work-expand::after {
+      content: '+';
+      transition: transform 0.3s var(--ease);
+    }
+    .work.expanded .work-expand::after { content: '−'; }
+
+    /* ============================================
+       EXHIBITIONS
+       ============================================ */
+    .exhibitions-list {
+      list-style: none;
+      margin-top: 3rem;
+    }
+    .exhibition {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 3rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+      transition: padding 0.4s var(--ease);
+    }
+    .exhibition:hover { padding-left: 1rem; }
+    .exhibition:first-child { border-top: 1px solid var(--line); }
+    .exhibition-year {
+      font-family: var(--serif-en);
+      font-size: 1.8rem;
+      color: var(--accent);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .exhibition-content h3 {
+      font-family: var(--serif-en);
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    [data-lang="zh"] .exhibition-content h3 { font-family: var(--serif-zh); }
+    .exhibition-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .exhibition-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      align-self: center;
+      white-space: nowrap;
+    }
+
+    /* ============================================
+       CV
+       ============================================ */
+    .cv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+    }
+    .cv-block h3 {
+      font-family: var(--serif-en);
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    [data-lang="zh"] .cv-block h3 { font-family: var(--serif-zh); }
+
+    .cv-item {
+      margin-bottom: 1.8rem;
+    }
+    .cv-item-year {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .cv-item-title {
+      font-family: var(--serif-en);
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    [data-lang="zh"] .cv-item-title { font-family: var(--serif-zh); }
+    .cv-item-place {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .cv-item-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .pub-list { list-style: none; }
+    .pub-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .pub-item strong { color: var(--accent); }
+    .pub-journal { font-style: italic; color: var(--text-muted); }
+
+    /* ============================================
+       CONTACT
+       ============================================ */
+    .contact {
+      text-align: center;
+      padding: 10rem 2.5rem;
+    }
+    .contact-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+    .contact-title {
+      font-family: var(--serif-en);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    [data-lang="zh"] .contact-title { font-family: var(--serif-zh); }
+    .contact-subtitle {
+      font-family: var(--serif-en);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .contact-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .contact-value {
+      font-family: var(--serif-en);
+      font-size: 1.1rem;
+      color: var(--text);
+      transition: color 0.3s var(--ease);
+    }
+    a.contact-value:hover { color: var(--accent); }
+
+    .contact-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 2.5rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.4s var(--ease);
+      cursor: pointer;
+      background: transparent;
+      font-family: var(--sans);
+    }
+    .contact-cta:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .contact-cta svg { transition: transform 0.4s var(--ease); }
+    .contact-cta:hover svg { transform: translateX(4px); }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      padding: 3rem 2.5rem;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================
+       SCROLL ANIMATIONS
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s var(--ease), transform 1s var(--ease);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 900px) {
+      .nav { padding: 1rem 1.5rem; }
+      .nav.scrolled { padding: 0.8rem 1.5rem; }
+      .nav-links { display: none; }
+      .menu-btn { display: flex; align-items: center; justify-content: center; }
+      section { padding: 5rem 1.5rem; }
+      .about { grid-template-columns: 1fr; gap: 3rem; }
+      .works-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .work:nth-child(even) { margin-top: 0; }
+      .cv-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .exhibition {
+        grid-template-columns: 80px 1fr;
+        gap: 1.5rem;
+      }
+      .exhibition-tag { grid-column: 2; justify-self: start; margin-top: 0.5rem; }
+      .contact-info { gap: 2rem; }
+    }
+
+    /* ============================================
+       MOBILE MENU
+       ============================================ */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      transform: translateY(-100%);
+      transition: transform 0.5s var(--ease);
+    }
+    .mobile-menu.open { transform: translateY(0); }
+    .mobile-menu a {
+      font-family: var(--serif-en);
+      font-size: 2rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      transition: color 0.3s var(--ease);
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* Smooth load-in */
+    body { animation: bodyFade 1s ease-out; }
+    @keyframes bodyFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body data-lang="en">
+
+  <!-- ====================== NAVIGATION ====================== -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">
+      <span class="lang-en">Limin Xu</span>
+      <span class="lang-zh">徐莉敏</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about"><span class="lang-en">About</span><span class="lang-zh">关于</span></a></li>
+      <li><a href="#works"><span class="lang-en">Works</span><span class="lang-zh">作品</span></a></li>
+      <li><a href="#exhibitions"><span class="lang-en">Exhibitions</span><span class="lang-zh">展览</span></a></li>
+      <li><a href="#cv"><span class="lang-en">CV</span><span class="lang-zh">简历</span></a></li>
+      <li><a href="#contact"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a></li>
+      <li>
+        <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
+          <span class="lang-en active" data-lang-btn="en">EN</span>
+          <span class="lang-zh active" data-lang-btn="zh">中</span>
+        </button>
+      </li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" class="mobile-link"><span class="lang-en">About</span><span class="lang-zh">关于</span></a>
+    <a href="#works" class="mobile-link"><span class="lang-en">Works</span><span class="lang-zh">作品</span></a>
+    <a href="#exhibitions" class="mobile-link"><span class="lang-en">Exhibitions</span><span class="lang-zh">展览</span></a>
+    <a href="#cv" class="mobile-link"><span class="lang-en">CV</span><span class="lang-zh">简历</span></a>
+    <a href="#contact" class="mobile-link"><span class="lang-en">Contact</span><span class="lang-zh">联系</span></a>
+  </div>
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="lang-en">Contemporary Artist · Researcher</span>
+        <span class="lang-zh">当代艺术家 · 研究者</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="en-only">Limin Xu</span>
+        <span class="zh-only">徐莉敏</span>
+      </h1>
+
+      <p class="hero-tagline">
+        <span class="lang-en">"Where data becomes emotion, and biology becomes beauty."<br/>Exploring the intersections of life, art, and science.</span>
+        <span class="lang-zh">"数据化为情感，生物化为美。"<br/>探索生命、艺术与科学的交汇之处。</span>
+      </p>
+
+      <div class="hero-meta">
+        <span><span class="lang-en">Shenzhen · Hong Kong</span><span class="lang-zh">深圳 · 香港</span></span>
+        <span><span class="lang-en">PhD Warwick · MFA CUHK</span><span class="lang-zh">华威博士 · 港中大艺术硕士</span></span>
+        <span><span class="lang-en">Multi-media · Installation</span><span class="lang-zh">多媒体 · 装置</span></span>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span class="lang-en">Scroll</span>
+      <span class="lang-zh">向下</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ====================== ABOUT ====================== -->
+  <section id="about">
+    <div class="section-eyebrow">
+      <span class="lang-en">01 — About</span>
+      <span class="lang-zh">01 — 关于</span>
+    </div>
+    <h2 class="section-title">
+      <span class="lang-en">Truth-seeking beyond conventional boundaries.</span>
+      <span class="lang-zh">在常规边界之外追寻真理。</span>
+    </h2>
+
+    <div class="about">
+      <div class="about-text reveal">
+        <p>
+          <span class="lang-en">With a background in bioscience and a doctoral degree from the University of Warwick, Limin Xu is a cross-disciplinary artist whose practice explores the intersections of life, art, and science. She holds an MA in Fine Arts from The Chinese University of Hong Kong and currently serves as Assistant Professor (Research) at the School of Medicine, CUHK Shenzhen.</span>
+          <span class="lang-zh">徐莉敏拥有生物科学背景和华威大学博士学位，是一位跨学科艺术家，致力于探索生命、艺术与科学的交汇。她拥有香港中文大学艺术硕士学位，现任香港中文大学（深圳）医学院助理教授（研究）。</span>
+        </p>
+
+        <p>
+          <span class="lang-en">Her artistic practice is driven by a commitment to truth-seeking beyond conventional boundaries, investigating alternative modes of expression through multi-media installation, ink painting, and generative art. Drawing on her research into the mechanisms of depression and the connections between neuroplasticity and visual/auditory arts, her work transforms scientific ideas into immersive experiences that encourage viewers to reflect on life's poetic nature.</span>
+          <span class="lang-zh">她的艺术实践以在常规边界之外追寻真理为驱动，通过多媒体装置、水墨画与生成艺术探索别样的表达方式。基于对抑郁机制的研究，以及神经可塑性与视觉/听觉艺术之间的联系，她将科学理念转化为沉浸式体验，引导观者反思生命的诗意。</span>
+        </p>
+
+        <p>
+          <span class="lang-en">Limin's recent research focuses on iPSC-derived organoid development and the screening of natural compounds for neurodegenerative diseases — bridging biomedical innovation with artistic inquiry. She believes that the act of creation is itself an inquiry into existence: how we are made, how we perceive, and how we might yet become.</span>
+          <span class="lang-zh">徐莉敏近期研究聚焦于iPSC衍生的类器官开发及针对神经退行性疾病的天然化合物筛选——在生物医学创新与艺术探索之间架起桥梁。她相信，创作本身就是对存在的追问：我们如何被塑造，如何感知，又如何可能成为另一种样子。</span>
+        </p>
+
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-num">8+</span>
+            <span class="stat-label"><span class="lang-en">Selected Exhibitions</span><span class="lang-zh">主要展览</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">2022</span>
+            <span class="stat-label"><span class="lang-en">MFA, CUHK</span><span class="lang-zh">艺术硕士</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">2012</span>
+            <span class="stat-label"><span class="lang-en">PhD, Warwick</span><span class="lang-zh">博士</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">∞</span>
+            <span class="stat-label"><span class="lang-en">Curiosity</span><span class="lang-zh">好奇心</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-image reveal reveal-delay-2">
+        <img src="images/sound_of_life_detail.jpg" alt="The Sound of Life — installation view" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== WORKS ====================== -->
+  <section id="works">
+    <div class="section-eyebrow">
+      <span class="lang-en">02 — Selected Works</span>
+      <span class="lang-zh">02 — 代表作品</span>
+    </div>
+    <h2 class="section-title">
+      <span class="lang-en">Recent & ongoing</span>
+      <span class="lang-zh">近期与进行中</span>
+    </h2>
+
+    <div class="works-grid">
+
+      <!-- Work 1 — Ink Art Meets Science (2024) -->
+      <article class="work reveal" data-work="ink-art">
+        <div class="work-image-wrap">
+          <img src="images/ink_art_meets_science.png" alt="Ink Art Meets Science — collaborative ink painting and scientific imagery" />
+        </div>
+        <div class="work-meta">
+          <div>
+            <h3 class="work-title">
+              <span class="lang-en">Ink Art Meets Science</span>
+              <span class="lang-zh">水墨与科学的碰撞</span>
+            </h3>
+            <p class="work-medium"><span class="lang-en">Collaborative Art Project · 2024</span><span class="lang-zh">合作艺术项目 · 2024</span></p>
+          </div>
+          <span class="work-year">2024</span>
+        </div>
+        <button class="work-expand" aria-label="Expand description">
+          <span class="lang-en">Read more</span>
+          <span class="lang-zh">展开</span>
+        </button>
+        <div class="work-desc">
+          <div class="work-desc-inner">
+            <p>
+              <span class="lang-en">A collaboration with Master Wang Haikun, a lineage holder of the Li Keran ink-painting tradition. The project pairs his distinctive deconstruction of natural imagery through ink brushwork with scientific images from young researchers at CUHK Shenzhen. Both artists and scientists, working from radically different tools, are united by a single act: to dismantle what is seen in order to approach what is true.</span>
+              <span class="lang-zh">与"李可染山水画派"传人王海琨老师合作的项目。艺术家通过具象与抽象的笔墨解构自然物象，与香港中文大学（深圳）青年学者的科研图像并置——艺术与科学，看似迥异的工具与方法，却共享同一信念：以解构所见的方式，逼近真相。</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 2 — Ignorance (2023) -->
+      <article class="work reveal reveal-delay-1" data-work="ignorance">
+        <div class="work-image-wrap">
+          <img src="images/ignorance.jpg" alt="Ignorance — multi-media installation" />
+        </div>
+        <div class="work-meta">
+          <div>
+            <h3 class="work-title">
+              <span class="lang-en">Ignorance</span>
+              <span class="lang-zh">无明</span>
+            </h3>
+            <p class="work-medium"><span class="lang-en">Multi-media Installation · 2023</span><span class="lang-zh">多媒体装置 · 2023</span></p>
+          </div>
+          <span class="work-year">2023</span>
+        </div>
+        <button class="work-expand" aria-label="Expand description">
+          <span class="lang-en">Read more</span>
+          <span class="lang-zh">展开</span>
+        </button>
+        <div class="work-desc">
+          <div class="work-desc-inner">
+            <p>
+              <span class="lang-en">Exhibited at Art Amoy 2023, one of China's leading contemporary art fairs. Materials: plaster, Kizil earth, branches, fabric, acrylic. Inspired by the opening of José Saramago's <em>Blindness</em> — <em>"I think we are blind, blind but seeing, blind people who can see, but do not see."</em> We move through the world behind masks of our own making; the installation asks what is seen, what is unseen, and whether grief or rage are properties of the world or projections of the self.</span>
+              <span class="lang-zh">参展2023艺术厦门国际博览会。材质：石膏、克孜尔土、树枝、布料、丙烯。灵感来自若泽·萨拉马戈《失明症漫记》开篇："我们仿佛都是盲人，看得见却看不见。"作品追问：悲伤、愤怒、恐惧，究竟是世界的真相，还是心相的外显？我们究竟看见了什么，又究竟什么都看不见。</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 3 — Connection (2023) -->
+      <article class="work reveal reveal-delay-2" data-work="connection">
+        <div class="work-image-wrap">
+          <img src="images/connection.jpg" alt="Connection — Dunhuang clay painting fused with cell microscopy" />
+        </div>
+        <div class="work-meta">
+          <div>
+            <h3 class="work-title">
+              <span class="lang-en">Connection</span>
+              <span class="lang-zh">Connection</span>
+            </h3>
+            <p class="work-medium"><span class="lang-en">Multi-media Installation · 2023</span><span class="lang-zh">多媒体装置 · 2023</span></p>
+          </div>
+          <span class="work-year">2023</span>
+        </div>
+        <button class="work-expand" aria-label="Expand description">
+          <span class="lang-en">Read more</span>
+          <span class="lang-zh">展开</span>
+        </button>
+        <div class="work-desc">
+          <div class="work-desc-inner">
+            <p>
+              <span class="lang-en">Shown in <em>Chivalrous</em>, a group exhibition at Craft Central, London. Image: Dunhuang clay-tablet painting techniques fused with cellular microscopy. Sound: field recordings from the English Lake District. How did ancient Dunhuang painters create such luminous Guanyin imagery in cold, airless caves? Only through unwavering conviction. By learning the ancient clay-tablet technique and painting the same subject across millennia, the artist reaches across time toward those painters. The work braids cell imagery — the symbol of life — with ancient devotion, asking whether life and faith are entangled.</span>
+              <span class="lang-zh">参展英国伦敦Craft Central《行者》群展。影像：敦煌泥板画技法融合细胞显微图像；音频：英国湖区声响录音。古代敦煌画师如何在阴冷压抑的洞窟中画出如此光明的观音？唯有坚定的信念。艺术家学习古老泥板画技法，与千年前的画家共绘同一题材，让细胞影像与古老壁画交织——追问生命与信仰是否本就同源。</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 4 — The Sound of Life (2022) -->
+      <article class="work reveal reveal-delay-3" data-work="sound-of-life">
+        <div class="work-image-wrap">
+          <img src="images/sound_of_life.jpg" alt="The Sound of Life — installation with David Bowie lyrics and blue light" />
+        </div>
+        <div class="work-meta">
+          <div>
+            <h3 class="work-title">
+              <span class="lang-en">The Sound of Life</span>
+              <span class="lang-zh">生命的声音</span>
+            </h3>
+            <p class="work-medium"><span class="lang-en">Multi-media Installation · 2022</span><span class="lang-zh">多媒体装置 · 2022</span></p>
+          </div>
+          <span class="work-year">2022</span>
+        </div>
+        <button class="work-expand" aria-label="Expand description">
+          <span class="lang-en">Read more</span>
+          <span class="lang-zh">展开</span>
+        </button>
+        <div class="work-desc">
+          <div class="work-desc-inner">
+            <p>
+              <span class="lang-en">Premiered at <em>Moment by Moment</em>, the MFA graduation exhibition of CUHK, Hong Kong Heritage Museum. Inspired by David Bowie's music: lyrics were translated into genetic sequences, then re-converted into music. The work asks what life is, how the four-letter A-T-C-G code produces infinite variation, and whether the coded breath that animates clay in so many creation myths resembles the logic of programming. Many cultures tell of a god breathing life into dust — that breath, as Daoists say, is the moment when one gives birth to ten thousand things. The piece asks what it means to be alive, and how the invisible — genes, cells — might be made visible.</span>
+              <span class="lang-zh">首发于香港中文大学艺术硕士毕业展《瞬间漫漫》（香港文物馆）。灵感来自David Bowie的音乐：以科学逻辑将歌词转换为基因序列，再将这段编码重新生成为音乐。作品追问何谓生命——ATCG四个密码如何万变组合，既然人类能发明编程语言创造AI，那我们是否也可能是某种智慧形态的"编程产物"？许多文化都有关于"神对泥土吹气"的故事——那口气，正是道家所谓"一生万物"的赋生时刻。</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 5 — The Poetry of Life (2021) -->
+      <article class="work reveal reveal-delay-4" data-work="poetry-of-life">
+        <div class="work-image-wrap">
+          <img src="images/poetry_of_life.png" alt="The Poetry of Life — generative cellular imagery" />
+        </div>
+        <div class="work-meta">
+          <div>
+            <h3 class="work-title">
+              <span class="lang-en">The Poetry of Life</span>
+              <span class="lang-zh">生命的诗</span>
+            </h3>
+            <p class="work-medium"><span class="lang-en">Generative Installation · 2021</span><span class="lang-zh">生成艺术装置 · 2021</span></p>
+          </div>
+          <span class="work-year">2021</span>
+        </div>
+        <button class="work-expand" aria-label="Expand description">
+          <span class="lang-en">Read more</span>
+          <span class="lang-zh">展开</span>
+        </button>
+        <div class="work-desc">
+          <div class="work-desc-inner">
+            <p>
+              <span class="lang-en">Exhibited at <em>Atopos</em>, Hui Gallery, Hong Kong. Cellular microscopy transformed into contemplative visual poetry — an early exploration of the aesthetic dimensions of biological processes and the symmetries hidden in living systems.</span>
+              <span class="lang-zh">参展香港汇画廊《Atopos》群展。细胞显微影像被转化为可凝视的视觉诗篇——这是艺术家早期对生物过程美学维度与生命系统中隐藏对称性的探索。</span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ====================== EXHIBITIONS ====================== -->
+  <section id="exhibitions">
+    <div class="section-eyebrow">
+      <span class="lang-en">03 — Exhibitions</span>
+      <span class="lang-zh">03 — 展览</span>
+    </div>
+    <h2 class="section-title">
+      <span class="lang-en">Selected exhibitions &amp; presentations</span>
+      <span class="lang-zh">主要展览与呈现</span>
+    </h2>
+
+    <ul class="exhibitions-list">
+      <li class="exhibition reveal">
+        <span class="exhibition-year">2024</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">Ink Art Meets Science</span>
+            <span class="lang-zh">水墨与科学的碰撞</span>
+          </h3>
+          <p>
+            <span class="lang-en">Collaborative Art Project — pairing Li-tradition ink painting with CUHK Shenzhen scientific imagery.</span>
+            <span class="lang-zh">合作艺术项目 —— 李可染画派水墨与港中大（深圳）科学图像的碰撞。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Project</span><span class="lang-zh">项目</span></span>
+      </li>
+
+      <li class="exhibition reveal reveal-delay-1">
+        <span class="exhibition-year">2023</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">Ignorance</span>
+            <span class="lang-zh">无明</span>
+          </h3>
+          <p>
+            <span class="lang-en">Multi-media Installation — Art Amoy Xiamen International Art Fair, Xiamen, China.</span>
+            <span class="lang-zh">多媒体装置 —— 2023艺术厦门国际博览会，厦门。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Art Fair</span><span class="lang-zh">艺博会</span></span>
+      </li>
+
+      <li class="exhibition reveal reveal-delay-2">
+        <span class="exhibition-year">2023</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">Connection</span>
+            <span class="lang-zh">Connection</span>
+          </h3>
+          <p>
+            <span class="lang-en">Multi-media Installation — <em>Chivalrous</em> group show, Craft Central, London, UK.</span>
+            <span class="lang-zh">多媒体装置 ——《行者》群展，伦敦Craft Central，英国。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Group Show</span><span class="lang-zh">群展</span></span>
+      </li>
+
+      <li class="exhibition reveal reveal-delay-3">
+        <span class="exhibition-year">2022</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">The Sound of Life</span>
+            <span class="lang-zh">生命的声音</span>
+          </h3>
+          <p>
+            <span class="lang-en">Multi-media Installation — <em>Moment by Moment</em>, CUHK MFA Graduation Exhibition, Hong Kong Heritage Museum.</span>
+            <span class="lang-zh">多媒体装置 ——《瞬间漫漫》港中大艺术硕士毕业展，香港文物馆。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Grad Show</span><span class="lang-zh">毕业展</span></span>
+      </li>
+
+      <li class="exhibition reveal reveal-delay-4">
+        <span class="exhibition-year">2021</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">Buji River Flash Mob</span>
+            <span class="lang-zh">布吉河快闪</span>
+          </h3>
+          <p>
+            <span class="lang-en">Graffiti co-created art — <em>Mobil.gue</em> (Prince Wall), C&amp;G Artpartment, Hong Kong.</span>
+            <span class="lang-zh">共创涂鸦艺术 ——《Mobil.gue》王子墙，C&amp;G艺术单位，香港。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Public</span><span class="lang-zh">公共</span></span>
+      </li>
+
+      <li class="exhibition reveal">
+        <span class="exhibition-year">2021</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">The Poetry of Life</span>
+            <span class="lang-zh">生命的诗</span>
+          </h3>
+          <p>
+            <span class="lang-en">Installation — <em>Atopos</em>, Hui Gallery, Hong Kong.</span>
+            <span class="lang-zh">装置 ——《Atopos》，香港汇画廊。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Group Show</span><span class="lang-zh">群展</span></span>
+      </li>
+
+      <li class="exhibition reveal reveal-delay-1">
+        <span class="exhibition-year">2021</span>
+        <div class="exhibition-content">
+          <h3>
+            <span class="lang-en">What If</span>
+            <span class="lang-zh">What If</span>
+          </h3>
+          <p>
+            <span class="lang-en">Installation — <em>It Should Be Coming</em>, Joint Art Exhibition, JCCAC, Hong Kong.</span>
+            <span class="lang-zh">装置 ——《It Should Be Coming》联展，JCCAC，香港。</span>
+          </p>
+        </div>
+        <span class="exhibition-tag"><span class="lang-en">Group Show</span><span class="lang-zh">群展</span></span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ====================== CV ====================== -->
+  <section id="cv">
+    <div class="section-eyebrow">
+      <span class="lang-en">04 — Curriculum Vitae</span>
+      <span class="lang-zh">04 — 简历</span>
+    </div>
+    <h2 class="section-title">
+      <span class="lang-en">Education, practice &amp; research</span>
+      <span class="lang-zh">教育、实践与研究</span>
+    </h2>
+
+    <div class="cv-grid">
+
+      <!-- Education -->
+      <div class="cv-block reveal">
+        <h3><span class="lang-en">Education</span><span class="lang-zh">教育</span></h3>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2022</span>
+          <h4 class="cv-item-title"><span class="lang-en">MA in Fine Arts</span><span class="lang-zh">艺术硕士</span></h4>
+          <p class="cv-item-place"><span class="lang-en">The Chinese University of Hong Kong</span><span class="lang-zh">香港中文大学</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2012</span>
+          <h4 class="cv-item-title"><span class="lang-en">PhD in Plant &amp; Environmental Sciences</span><span class="lang-zh">植物与环境科学博士</span></h4>
+          <p class="cv-item-place"><span class="lang-en">University of Warwick, School of Life Sciences, UK</span><span class="lang-zh">华威大学，英国</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2005</span>
+          <h4 class="cv-item-title"><span class="lang-en">MSc in Applied Biomolecular Technology</span><span class="lang-zh">应用生物分子技术硕士</span></h4>
+          <p class="cv-item-place"><span class="lang-en">University of Nottingham, UK</span><span class="lang-zh">诺丁汉大学，英国</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2003</span>
+          <h4 class="cv-item-title"><span class="lang-en">BSc in Biotechnology</span><span class="lang-zh">生物技术学士</span></h4>
+          <p class="cv-item-place"><span class="lang-en">South China Agricultural University, Guangzhou</span><span class="lang-zh">华南农业大学，广州</span></p>
+        </div>
+      </div>
+
+      <!-- Professional Experience -->
+      <div class="cv-block reveal reveal-delay-1">
+        <h3><span class="lang-en">Professional Practice</span><span class="lang-zh">专业经历</span></h3>
+
+        <div class="cv-item">
+          <span class="cv-item-year"><span class="lang-en">2025 — Present</span><span class="lang-zh">2025 — 至今</span></span>
+          <h4 class="cv-item-title"><span class="lang-en">Assistant Professor (Research)</span><span class="lang-zh">助理教授（研究）</span></h4>
+          <p class="cv-item-place"><span class="lang-en">School of Medicine, CUHK Shenzhen</span><span class="lang-zh">香港中文大学（深圳）医学院</span></p>
+          <p class="cv-item-desc"><span class="lang-en">Drug discovery (anti-depressant), iPSC-derived organoids, biosynthesis — bridging biomedical innovation with artistic inquiry.</span><span class="lang-zh">抗抑郁药物发现、iPSC衍生类器官、生物合成研究——在生物医学创新与艺术探索之间架桥。</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year"><span class="lang-en">2019 — 2025</span><span class="lang-zh">2019 — 2025</span></span>
+          <h4 class="cv-item-title"><span class="lang-en">Research Fellow / Manager</span><span class="lang-zh">研究员 / 经理</span></h4>
+          <p class="cv-item-place"><span class="lang-en">School of Medicine, CUHK Shenzhen</span><span class="lang-zh">香港中文大学（深圳）医学院</span></p>
+          <p class="cv-item-desc"><span class="lang-en">Established the Biomedical Big Data Cloud Platform (Tencent) and joint laboratory with Haplox.</span><span class="lang-zh">建立生物医学大数据云平台（腾讯）及与Haplox的联合实验室。</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year"><span class="lang-en">2014 — 2019</span><span class="lang-zh">2014 — 2019</span></span>
+          <h4 class="cv-item-title"><span class="lang-en">Senior Research Manager (PI)</span><span class="lang-zh">高级研究经理</span></h4>
+          <p class="cv-item-place"><span class="lang-en">AsiaPac Bio-Technology Co. Ltd., Dongguan</span><span class="lang-zh">亚太生物科技有限公司，东莞</span></p>
+          <p class="cv-item-desc"><span class="lang-en">Led biomass degradation, biosynthesis, and novel enzyme development projects.</span><span class="lang-zh">主导生物质降解、生物合成及新型酶开发项目。</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year"><span class="lang-en">2013 — 2014</span><span class="lang-zh">2013 — 2014</span></span>
+          <h4 class="cv-item-title"><span class="lang-en">Research Associate</span><span class="lang-zh">研究员</span></h4>
+          <p class="cv-item-place"><span class="lang-en">University of Warwick, UK</span><span class="lang-zh">华威大学，英国</span></p>
+        </div>
+      </div>
+
+      <!-- Publications -->
+      <div class="cv-block reveal reveal-delay-2">
+        <h3><span class="lang-en">Selected Publications</span><span class="lang-zh">代表论文</span></h3>
+
+        <ul class="pub-list">
+          <li class="pub-item">
+            <strong>Xu, L.</strong>, Zhang, J., He, Y., et al. (2023). ScRNAPip: A systematic and dynamic pipeline for single-cell RNA sequencing analysis. <span class="pub-journal">iMeta</span>, 2, e132. <em>(First Author, IF 44.4)</em>
+          </li>
+          <li class="pub-item">
+            <strong>Xu, L.</strong>, Wang, Y., Xi, C., et al. (2025). From bench to motion: Unraveling exercise biology through 3D human organoids. <span class="pub-journal">Frontiers in Bioscience – Landmark</span>, 30(10). <em>(First Author, IF 4.1)</em>
+          </li>
+          <li class="pub-item">
+            <strong>Xu, L.</strong>, Chen, F., Fan, H., et al. (2025). Methyl gallate attenuates post-stroke emotional and cognitive symptoms by promoting hippocampal neurogenesis. <span class="pub-journal">bioRxiv</span>. <em>(Co-first &amp; Corresponding Author)</em>
+          </li>
+          <li class="pub-item">
+            Pang, J., Chen, Y., Wang, H., et al. (2025). Tumor-associated NK cells as a novel immunotherapeutic target in triple-negative breast cancer. <span class="pub-journal">Breast Cancer Research</span>, 27(1). <em>(Co-corresponding Author, IF 5.6)</em>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Certifications & Teaching -->
+      <div class="cv-block reveal reveal-delay-3">
+        <h3><span class="lang-en">Teaching &amp; Certifications</span><span class="lang-zh">教学与资质</span></h3>
+
+        <div class="cv-item">
+          <span class="cv-item-year"><span class="lang-en">2025 — 2026</span><span class="lang-zh">2025 — 2026</span></span>
+          <h4 class="cv-item-title"><span class="lang-en">MED1021 / MED1022 — Biochemistry &amp; Organic Chemistry</span><span class="lang-zh">MED1021 / MED1022 — 生物化学与有机化学</span></h4>
+          <p class="cv-item-place"><span class="lang-en">For Medical Students, CUHK Shenzhen</span><span class="lang-zh">港中大（深圳）医学院</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year"><span class="lang-en">2022 — 2023</span><span class="lang-zh">2022 — 2023</span></span>
+          <h4 class="cv-item-title"><span class="lang-en">Microbiology</span><span class="lang-zh">微生物学</span></h4>
+          <p class="cv-item-place"><span class="lang-en">School of Medicine, CUHK Shenzhen</span><span class="lang-zh">港中大（深圳）医学院</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2023</span>
+          <h4 class="cv-item-title"><span class="lang-en">Filmmaking Certificate</span><span class="lang-zh">电影制作证书</span></h4>
+          <p class="cv-item-place"><span class="lang-en">National Film and Television School, UK</span><span class="lang-zh">英国国家电影电视学院</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2017 / 2019</span>
+          <h4 class="cv-item-title">PMP® &amp; PMI-PBA®</h4>
+          <p class="cv-item-place"><span class="lang-en">Project Management Professional / Professional in Business Analysis, PMI</span><span class="lang-zh">PMI 项目管理与商业分析认证</span></p>
+        </div>
+
+        <div class="cv-item">
+          <span class="cv-item-year">2019</span>
+          <h4 class="cv-item-title">PADI Open Water Diving</h4>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================== CONTACT ====================== -->
+  <section class="contact" id="contact">
+    <p class="contact-eyebrow">
+      <span class="lang-en">05 — Get in Touch</span>
+      <span class="lang-zh">05 — 联系</span>
+    </p>
+    <h2 class="contact-title">
+      <span class="lang-en">Let's make something that lasts.</span>
+      <span class="lang-zh">让我们一起做点能留下来的东西。</span>
+    </h2>
+    <p class="contact-subtitle">
+      <span class="lang-en">Open to collaborations, commissions, conversations — and the unexpected.</span>
+      <span class="lang-zh">欢迎合作、委托、对话——以及一切未曾设想的可能。</span>
+    </p>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="contact-label"><span class="lang-en">Email</span><span class="lang-zh">邮箱</span></span>
+        <a class="contact-value" href="mailto:Et820@hotmail.com">Et820@hotmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label"><span class="lang-en">Phone</span><span class="lang-zh">电话</span></span>
+        <a class="contact-value" href="tel:+8613622666482">+86 136 2266 6482</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label"><span class="lang-en">WeChat</span><span class="lang-zh">微信</span></span>
+        <span class="contact-value">Limin7849</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label"><span class="lang-en">Based in</span><span class="lang-zh">所在地</span></span>
+        <span class="contact-value"><span class="lang-en">Shenzhen, China</span><span class="lang-zh">中国深圳</span></span>
+      </div>
+    </div>
+
+    <a href="mailto:Et820@hotmail.com" class="contact-cta">
+      <span class="lang-en">Send a Message</span>
+      <span class="lang-zh">发送消息</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer>
+    <p>
+      <span class="lang-en">© 2026 Limin Xu 徐莉敏 — All works and images are property of the artist.</span>
+      <span class="lang-zh">© 2026 徐莉敏 Limin Xu — 所有作品与图像均为艺术家本人所有。</span>
+    </p>
+  </footer>
+
+  <script>
+    /* ============================================
+       LANGUAGE TOGGLE
+       ============================================ */
+    const body = document.body;
+    const langToggle = document.getElementById('langToggle');
+    const storedLang = localStorage.getItem('limin-lang');
+
+    function setLanguage(lang) {
+      body.setAttribute('data-lang', lang);
+      localStorage.setItem('limin-lang', lang);
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      // Update toggle button active state
+      document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+        if (btn.getAttribute('data-lang-btn') === lang) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+    }
+
+    if (storedLang) setLanguage(storedLang);
+
+    langToggle.addEventListener('click', () => {
+      const current = body.getAttribute('data-lang') || 'en';
+      setLanguage(current === 'en' ? 'zh' : 'en');
+    });
+
+    /* ============================================
+       SCROLL EFFECTS — Nav & Reveal
+       ============================================ */
+    const nav = document.getElementById('nav');
+    const reveals = document.querySelectorAll('.reveal');
+
+    function onScroll() {
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    reveals.forEach(el => io.observe(el));
+
+    /* ============================================
+       WORK EXPAND TOGGLE
+       ============================================ */
+    document.querySelectorAll('.work-expand').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const work = btn.closest('.work');
+        work.classList.toggle('expanded');
+      });
+    });
+
+    /* ============================================
+       MOBILE MENU
+       ============================================ */
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
